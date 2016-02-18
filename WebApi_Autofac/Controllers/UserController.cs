@@ -7,6 +7,7 @@ using Contracts;
 using Logic;
 using MediatR;
 using WebApi_Autofac.Handlers;
+using WebApi_Autofac.Handlers.Features.User;
 
 namespace WebApi_Autofac.Controllers
 {
@@ -26,42 +27,14 @@ namespace WebApi_Autofac.Controllers
             return string.Format("{0}", Assembly.GetExecutingAssembly().GetName().Version);
         }
 
-        [Route("GetAll")]
-        public IHttpActionResult GetAll()
-        {
-            IHttpActionResult response =
-                ResponseMessage(Request.CreateResponse(HttpStatusCode.InternalServerError, "Error Processing Request"));
-            var result = new User(Uow).GetAll();
-
-            if (result == null) return response;
-            var responseMessage = Request.CreateResponse(HttpStatusCode.OK, new ResponseObject
-            {
-                Data = result,
-                Message = "Users retrieved Successfully",
-                IsSuccessful = true
-            });
-
-            if (result.Count == 0)
-            {
-                responseMessage = Request.CreateResponse(HttpStatusCode.OK, new ResponseObject
-                {
-                    Message = "No Users Currently Exist"
-                });
-            }
-            response = ResponseMessage(responseMessage);
-            return response;
-        }
 
         [Route("Add")]
         [HttpPost]
         public object UploadAttendenceRegister(UserCreateModel model)
         {
-            if (ModelState.IsValid)
-            {
-                var result = MediatR.Send(model);
-                return result;
-            }
-            return null;
+            if (!ModelState.IsValid) return null;
+            var result = MediatR.Send(model);
+            return result;
         }
     }
 }

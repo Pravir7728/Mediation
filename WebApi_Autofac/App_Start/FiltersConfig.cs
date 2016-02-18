@@ -1,6 +1,6 @@
 ﻿using System.Web.Mvc;
 
-namespace WebApi_Autofac.App_Start
+namespace WebApi_Autofac
 {
     public class FiltersConfig
     {

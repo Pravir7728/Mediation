@@ -1,9 +1,9 @@
 ﻿using AutoMapper;
 using Domain;
 using WebApi_Autofac.Extensions;
-using WebApi_Autofac.Handlers;
+using WebApi_Autofac.Handlers.Features.User;
 
-namespace WebApi_Autofac.App_Start
+namespace WebApi_Autofac
 {
     public class AutoMapperConfiguration
     {

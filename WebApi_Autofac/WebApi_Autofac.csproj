@@ -185,14 +185,14 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Handlers\Logging\LogginHandler.cs" />
-    <Compile Include="Infrastructure\ProcessFlow\ILoggingHandler.cs" />
-    <Compile Include="Handlers\UserCreateHandler.cs" />
+    <Compile Include="Handlers\Logging\LoggingHandler.cs" />
+    <Compile Include="Infrastructure\Processes\ILoggingHandler.cs" />
+    <Compile Include="Handlers\Features\User\UserCreateHandler.cs" />
     <Compile Include="Infrastructure\Mediator\MediatorPipeline.cs" />
-    <Compile Include="Infrastructure\ProcessFlow\IPostRequestHandler.cs" />
-    <Compile Include="Infrastructure\ProcessFlow\IPreRequestHandler.cs" />
-    <Compile Include="Infrastructure\ProcessFlow\IRequestHandler.cs" />
-    <Compile Include="Infrastructure\ProcessFlow\IValidator.cs" />
+    <Compile Include="Infrastructure\Processes\IPostRequestHandler.cs" />
+    <Compile Include="Infrastructure\Processes\IPreRequestHandler.cs" />
+    <Compile Include="Infrastructure\Processes\IRequestHandler.cs" />
+    <Compile Include="Infrastructure\Processes\IValidator.cs" />
     <Compile Include="Handlers\Validation\ValidationHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -212,7 +212,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Models\" />
-    <Folder Include="Validators\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Common\Common.csproj">

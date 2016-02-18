@@ -1,4 +1,4 @@
-﻿namespace WebApi_Autofac.Infrastructure.ProcessFlow
+﻿namespace WebApi_Autofac.Infrastructure.Processes
 {
     public interface IPreRequestHandler<in TRequest>
     {

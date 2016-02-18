@@ -11,11 +11,11 @@ using Autofac.Integration.WebApi;
 using Contracts;
 using DAL;
 using MediatR;
+using WebApi_Autofac.Handlers.Validation;
 using WebApi_Autofac.Infrastructure.Mediator;
-using WebApi_Autofac.Infrastructure.ProcessFlow;
-using WebApi_Autofac.Infrastructure.Validation;
+using WebApi_Autofac.Infrastructure.Processes;
 
-namespace WebApi_Autofac.App_Start
+namespace WebApi_Autofac
 {
     public class AutofacDependencyInjector
     {
@@ -66,15 +66,6 @@ namespace WebApi_Autofac.App_Start
         /// <param name="builder"></param>
         private static void DecorateHandlers(ContainerBuilder builder)
         {
-            //const string handlerKey = "handler";
-            //Assembly[] assemblyScan = {Assembly.GetExecutingAssembly()};
-            //builder.RegisterAssemblyTypes(assemblyScan).As(a => a.GetInterfaces()
-            //    .Where(interfaceType => interfaceType.IsClosedTypeOf(typeof (IRequestHandler<,>)))
-            //    .Select(interfaceType => new KeyedService(handlerKey, interfaceType)));
-
-            //builder.RegisterGenericDecorator(typeof (MediatorPipeline<,>), typeof (IRequestHandler<,>), handlerKey);
-            //builder.RegisterGenericDecorator(typeof (ValidationHandler<,>), typeof (IRequestHandler<,>), handlerKey);
-
             builder.RegisterType<Mediator>().AsImplementedInterfaces()
                 .AsSelf()
                 .InstancePerLifetimeScope();

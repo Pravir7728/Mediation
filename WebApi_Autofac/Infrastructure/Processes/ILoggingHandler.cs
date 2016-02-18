@@ -1,4 +1,4 @@
-﻿namespace WebApi_Autofac.Handlers.Logging
+﻿namespace WebApi_Autofac.Infrastructure.Processes
 {
     public interface ILoggingHandler<in TRequest, in TResponse>
     {

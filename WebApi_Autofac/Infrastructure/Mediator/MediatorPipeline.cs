@@ -1,5 +1,5 @@
 ﻿using MediatR;
-using WebApi_Autofac.Infrastructure.ProcessFlow;
+using WebApi_Autofac.Infrastructure.Processes;
 
 namespace WebApi_Autofac.Infrastructure.Mediator
 {

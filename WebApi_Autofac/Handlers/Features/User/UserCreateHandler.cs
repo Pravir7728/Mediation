@@ -3,14 +3,14 @@ using System.Net.Http;
 using AutoMapper;
 using Common;
 using Contracts;
-using Domain;
 using FluentValidation;
 using FluentValidation.Attributes;
 using FluentValidation.Results;
 using MediatR;
+
 #pragma warning disable 618
 
-namespace WebApi_Autofac.Handlers
+namespace WebApi_Autofac.Handlers.Features.User
 {
     //request handler
     public class UserCreateHandler : IRequestHandler<UserCreateModel, ResponseObject>
@@ -24,7 +24,7 @@ namespace WebApi_Autofac.Handlers
 
         public ResponseObject Handle(UserCreateModel message)
         {
-            var dest = Mapper.Map<User>(message);
+            var dest = Mapper.Map<Domain.User>(message);
             var result = new Logic.User(Uow).AddUser(dest);
             if (result == null) return null;
             var response = new ResponseObject

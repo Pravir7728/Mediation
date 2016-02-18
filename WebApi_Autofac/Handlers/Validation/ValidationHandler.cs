@@ -2,7 +2,7 @@
 using FluentValidation;
 using MediatR;
 
-namespace WebApi_Autofac.Infrastructure.Validation
+namespace WebApi_Autofac.Handlers.Validation
 {
     public class ValidationHandler<TRequest, TResponse> : IRequestHandler<TRequest, TResponse>
         where TRequest : IRequest<TResponse>
