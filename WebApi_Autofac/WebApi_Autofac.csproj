@@ -185,6 +185,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Handlers\Exceptions\ExceptionHandler.cs" />
     <Compile Include="Handlers\Logging\LoggingHandler.cs" />
     <Compile Include="Infrastructure\Processes\ILoggingHandler.cs" />
     <Compile Include="Handlers\Features\User\UserCreateHandler.cs" />
