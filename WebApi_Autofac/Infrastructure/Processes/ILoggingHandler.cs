@@ -1,5 +1,6 @@
 ﻿using System;
 using MediatR;
+#pragma warning disable 693
 
 namespace WebApi_Autofac.Infrastructure.Processes
 {

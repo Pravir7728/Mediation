@@ -112,6 +112,10 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Practices.ServiceLocation, Version=1.3.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\CommonServiceLocator.1.3\lib\portable-net4+sl5+netcore45+wpa81+wp8\Microsoft.Practices.ServiceLocation.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Owin, Version=1.0.0.0, Culture=neutral, PublicKeyToken=f0ebd12fd5e55cc5, processorArchitecture=MSIL">
       <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
       <Private>True</Private>
@@ -175,6 +179,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\AutofacDependencyInjector.cs" />
+    <Compile Include="App_Start\AutofacServiceLocator.cs" />
     <Compile Include="App_Start\AutoMapperConfiguration.cs" />
     <Compile Include="App_Start\FiltersConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
@@ -186,6 +191,11 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Handlers\Exceptions\ExceptionHandler.cs" />
+    <Compile Include="Handlers\Features\User\DeleteUserHandler.cs" />
+    <Compile Include="Handlers\Features\User\GetAllUserHandler.cs" />
+    <Compile Include="Handlers\Features\User\GetUserHandler.cs" />
+    <Compile Include="Handlers\Features\User\UpdateUserHandler.cs" />
+    <Compile Include="Handlers\Logging\Logger.cs" />
     <Compile Include="Handlers\Logging\LoggingHandler.cs" />
     <Compile Include="Infrastructure\Processes\ILoggingHandler.cs" />
     <Compile Include="Handlers\Features\User\UserCreateHandler.cs" />

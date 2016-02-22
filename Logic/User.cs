@@ -32,5 +32,10 @@ namespace Logic
             Uow.Users.Detach(model);
             return model;
         }
+
+        public Domain.User GetUserById(Guid id)
+        {
+            return Uow.Users.GetById(id);
+        }
     }
 }

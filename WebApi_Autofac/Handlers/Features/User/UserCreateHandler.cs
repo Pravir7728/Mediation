@@ -12,7 +12,9 @@ using MediatR;
 
 namespace WebApi_Autofac.Handlers.Features.User
 {
-    //request handler
+
+    #region Handler
+
     public class UserCreateHandler : IRequestHandler<UserCreateModel, ResponseObject>
     {
         private readonly IUow Uow;
@@ -38,7 +40,10 @@ namespace WebApi_Autofac.Handlers.Features.User
         }
     }
 
-    //view model
+    #endregion
+
+    #region View model
+
     [Validator(typeof (UserModelValidator))]
     public class UserCreateModel : IRequest<ResponseObject>
     {
@@ -46,7 +51,10 @@ namespace WebApi_Autofac.Handlers.Features.User
         public string Password { get; set; }
     }
 
-    //validation
+    #endregion
+
+    #region Validation
+
     public class UserModelValidator : AbstractValidator<UserCreateModel>
     {
         private readonly IUow Uow;
@@ -68,4 +76,6 @@ namespace WebApi_Autofac.Handlers.Features.User
             });
         }
     }
+
+    #endregion
 }
