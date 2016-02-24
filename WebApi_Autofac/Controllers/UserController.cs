@@ -38,17 +38,15 @@ namespace WebApi_Autofac.Controllers
         [HttpGet]
         public object GetById([FromUri] GetUserRequest model)
         {
-            if (!ModelState.IsValid) return null;
             var result = MediatR.Send(model);
             return result;
         }
 
         //Read All
         [Route("GetAll")]
-        [HttpPost]
-        public object GetAll(UserCreateModel model)
+        [HttpGet]
+        public object GetAll(GetAllUserRequest model)
         {
-            if (!ModelState.IsValid) return null;
             var result = MediatR.Send(model);
             return result;
         }

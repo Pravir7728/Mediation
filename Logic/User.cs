@@ -37,5 +37,11 @@ namespace Logic
         {
             return Uow.Users.GetById(id);
         }
+
+        public void DeleteUserById(Guid id)
+        {
+            Uow.Users.Delete(id);
+            Uow.Commit();
+        }
     }
 }
