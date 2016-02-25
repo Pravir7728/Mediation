@@ -4,9 +4,9 @@ using Autofac.Core;
 using log4net;
 using Module = Autofac.Module;
 
-namespace WebApi.App_Start
+namespace WebApi.Infrastructure.Modules
 {
-    public class LoggingConfig : Module
+    public class LoggingModule : Module
     {
         private static void InjectLoggerProperties(object instance)
         {

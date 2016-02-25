@@ -1,6 +1,5 @@
 ﻿using System.Threading.Tasks;
 using MediatR;
-using Microsoft.Owin.Logging;
 using WebApi.Infrastructure.Processes;
 
 namespace WebApi.Infrastructure.Mediator

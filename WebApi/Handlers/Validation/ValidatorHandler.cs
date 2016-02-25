@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using FluentValidation;
 using MediatR;
 
-namespace WebApi.Handlers
+namespace WebApi.Handlers.Validation
 {
     public class ValidatorHandler<TRequest, TResponse> : IAsyncRequestHandler<TRequest, TResponse>
         where TRequest : IAsyncRequest<TResponse>

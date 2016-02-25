@@ -5,49 +5,37 @@ using System.Threading.Tasks;
 using AutoMapper;
 using Common;
 using Contracts;
-using Domain;
 using FluentValidation;
 using FluentValidation.Attributes;
 using MediatR;
-using WebApi.Infrastructure;
 
+#pragma warning disable 1998
 #pragma warning disable 618
 
-namespace WebApi.Features
+namespace WebApi.Handlers.Features.User
 {
 
     #region Handler
 
-    public class UserCreateHandler : IAsyncRequestHandler<UserCreateModel, ResponseObject>
+    public class Create : IAsyncRequestHandler<UserCreateModel, ResponseObject>
     {
-        private readonly IUow Uow;
-        private readonly IValidatorFactory Validator;
+        private readonly IUow _uow;
 
-        public UserCreateHandler(IUow uow, ModelValidatorFactory validatorFactory)
+        public Create(IUow uow)
         {
-            Uow = uow;
-            Validator = validatorFactory;
+            _uow = uow;
         }
 
         public async Task<ResponseObject> Handle(UserCreateModel message)
         {
-            var validationResult = Validator.GetValidator<UserModelValidator>().Validate(message);
-            var response = new ResponseObject
-            {
-                ResponseMessage = new HttpResponseMessage(HttpStatusCode.BadRequest),
-                Data = validationResult.Errors,
-                Message = "Validation Failed on one or more properties",
-                IsSuccessful = false
-            };
-            if (!validationResult.IsValid) return response;
-            var dest = Mapper.Map<User>(message);
-            var result = new Logic.User(Uow).AddUser(dest);
+            var dest = Mapper.Map<Domain.User>(message);
+            var result = new Logic.User(_uow).AddUser(dest);
             if (result == null) return null;
-            response = new ResponseObject
+            var response = new ResponseObject
             {
                 ResponseMessage = new HttpResponseMessage(HttpStatusCode.OK),
                 Data = result,
-                Message = "Users retrieved Successfully",
+                Message = "Users Added Successfully",
                 IsSuccessful = true
             };
             return response;
@@ -56,7 +44,7 @@ namespace WebApi.Features
 
     #endregion
 
-    #region View Model
+    #region Request/Response Model
 
     [Validator(typeof (UserModelValidator))]
     public class UserCreateModel : IAsyncRequest<ResponseObject>
@@ -67,12 +55,15 @@ namespace WebApi.Features
 
     #endregion
 
-    #region Validation
+    #region Validator
 
     public class UserModelValidator : AbstractValidator<UserCreateModel>
     {
-        public UserModelValidator()
+        private readonly IUow _uow;
+
+        public UserModelValidator(IUow uow)
         {
+            _uow = uow;
             RuleFor(user => user.UserName).NotEmpty();
             RuleFor(user => user.UserName)
                 .Length(3, 250)

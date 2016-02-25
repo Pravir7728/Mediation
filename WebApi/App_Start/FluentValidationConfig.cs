@@ -1,17 +1,25 @@
-﻿using System.Web.Http;
+﻿using System.Reflection;
+using System.Web.Http;
+using System.Web.Http.Validation;
 using Autofac;
 using FluentValidation;
 using FluentValidation.WebApi;
-using WebApi.Features;
-using WebApi.Infrastructure;
+using WebApi.Infrastructure.Factories;
 
-namespace WebApi.App_Start
+namespace WebApi
 {
     public class FluentValidationConfig
     {
-        public static void RegisterValidation(HttpConfiguration config)
+        public static void RegisterValidation(ContainerBuilder builder, HttpConfiguration config)
         {
-            FluentValidationModelValidatorProvider.Configure(config, provider => provider.ValidatorFactory = new ModelValidatorFactory());
+            builder.RegisterAssemblyTypes(Assembly.GetExecutingAssembly())
+                .Where(t => t.Name.EndsWith("Validator"))
+                .AsImplementedInterfaces()
+                .InstancePerLifetimeScope();
+
+            builder.RegisterType<FluentValidationModelValidatorProvider>().As<ModelValidatorProvider>();
+
+            builder.RegisterType<ValidatorFactory>().As<IValidatorFactory>().SingleInstance();
         }
     }
 }
