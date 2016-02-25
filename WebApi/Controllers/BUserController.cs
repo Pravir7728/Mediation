@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using System.Web.Http;
 using Common;
 using Contracts;
+using log4net;
 using MediatR;
 using WebApi.Features;
 
@@ -13,16 +14,19 @@ namespace WebApi.Controllers
     [RoutePrefix("Api/BUser")]
     public class BUserController : BaseController
     {
-        public BUserController(IUow uow, IMediator mediatR)
+
+        public BUserController(IUow uow, IMediator mediatR, ILog log)
         {
             Uow = uow;
             MediatR = mediatR;
+            Log = log;
         }
 
         [HttpGet]
         [Route("VersionTest")]
         public string Version()
         {
+            Log.Debug("GET Request traced");
             return string.Format("{0}", Assembly.GetExecutingAssembly().GetName().Version);
         }
 

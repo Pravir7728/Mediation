@@ -9,6 +9,7 @@ using Domain;
 using FluentValidation;
 using FluentValidation.Attributes;
 using MediatR;
+using WebApi.Infrastructure;
 
 #pragma warning disable 618
 
@@ -20,24 +21,25 @@ namespace WebApi.Features
     public class UserCreateHandler : IAsyncRequestHandler<UserCreateModel, ResponseObject>
     {
         private readonly IUow Uow;
+        private readonly IValidatorFactory Validator;
 
-        public UserCreateHandler(IUow uow)
+        public UserCreateHandler(IUow uow, ModelValidatorFactory validatorFactory)
         {
             Uow = uow;
+            Validator = validatorFactory;
         }
 
         public async Task<ResponseObject> Handle(UserCreateModel message)
         {
-            var validate = new UserModelValidator();
-            var res = validate.Validate(message);
+            var validationResult = Validator.GetValidator<UserModelValidator>().Validate(message);
             var response = new ResponseObject
             {
                 ResponseMessage = new HttpResponseMessage(HttpStatusCode.BadRequest),
-                Data = res.Errors,
+                Data = validationResult.Errors,
                 Message = "Validation Failed on one or more properties",
                 IsSuccessful = false
             };
-            if (!res.IsValid) return response;
+            if (!validationResult.IsValid) return response;
             var dest = Mapper.Map<User>(message);
             var result = new Logic.User(Uow).AddUser(dest);
             if (result == null) return null;
