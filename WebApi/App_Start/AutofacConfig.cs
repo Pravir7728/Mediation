@@ -11,17 +11,19 @@ using Contracts;
 using DAL;
 using MediatR;
 using Owin;
-using WebApi.Handlers;
+using WebApi.Handlers.Validation;
 using WebApi.Infrastructure.Mediator;
+using WebApi.Infrastructure.Modules;
 using WebApi.Infrastructure.Processes;
 
-namespace WebApi.App_Start
+namespace WebApi
 {
     public class AutofacConfig
     {
         public static void ConfigureDependencyInjection(IAppBuilder app, HttpConfiguration config)
         {
             var builder = new ContainerBuilder();
+
             builder.RegisterSource(new ContravariantRegistrationSource());
 
             builder.RegisterAssemblyTypes(typeof (IMediator).Assembly).AsImplementedInterfaces();
@@ -31,32 +33,28 @@ namespace WebApi.App_Start
                 var c = ctx.Resolve<IComponentContext>();
                 return t => c.Resolve(t);
             });
+
             builder.Register<MultiInstanceFactory>(ctx =>
             {
                 var c = ctx.Resolve<IComponentContext>();
                 return t => (IEnumerable<object>) c.Resolve(typeof (IEnumerable<>).MakeGenericType(t));
             });
 
-
             builder.RegisterAssemblyTypes(Assembly.GetExecutingAssembly())
                 .As(type => type.GetInterfaces()
                     .Where(interfacetype => interfacetype.IsClosedTypeOf(typeof (IAsyncPreRequestHandler<>))));
 
-
             builder.RegisterAssemblyTypes(Assembly.GetExecutingAssembly())
                 .As(type => type.GetInterfaces()
                     .Where(interfacetype => interfacetype.IsClosedTypeOf(typeof (IAsyncPostRequestHandler<,>))));
-
 
             builder.RegisterAssemblyTypes(Assembly.GetExecutingAssembly())
                 .As(type => type.GetInterfaces()
                     .Where(interfaceType => interfaceType.IsClosedTypeOf(typeof (IAsyncRequestHandler<,>)))
                     .Select(interfaceType => new KeyedService("asyncRequestHandler", interfaceType)));
 
-
             builder.RegisterGenericDecorator(typeof (AsyncMediatorPipeline<,>), typeof (IAsyncRequestHandler<,>),
                 "asyncRequestHandler");
-
 
             builder.RegisterGenericDecorator(
                 typeof (ValidatorHandler<,>),
@@ -80,8 +78,6 @@ namespace WebApi.App_Start
             var container = builder.Build();
 
             config.DependencyResolver = new AutofacWebApiDependencyResolver(container);
-
-
 
             app.UseAutofacMiddleware(container);
             app.UseAutofacWebApi(config);

@@ -250,11 +250,11 @@
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\BUserController.cs" />
     <Compile Include="Extensions\BidirectionalMap.cs" />
-    <Compile Include="Features\UserCreateHandler.cs" />
+    <Compile Include="Handlers\Features\User\Create.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Handlers\ValidatorHandler.cs" />
+    <Compile Include="Handlers\Validation\ValidatorHandler.cs" />
     <Compile Include="Infrastructure\Mediator\AsyncMediatorPipeline.cs" />
     <Compile Include="Infrastructure\ModelValidatorFactory.cs" />
     <Compile Include="Infrastructure\Processes\IAsyncPostRequestHandler.cs" />

@@ -2,12 +2,12 @@
 using log4net.Config;
 using Microsoft.Owin;
 using Owin;
-using WebApi.App_Start;
+using WebApi;
 
 [assembly: OwinStartup(typeof (Startup))]
 [assembly: XmlConfigurator(Watch = true)]
 
-namespace WebApi.App_Start
+namespace WebApi
 {
     public class Startup
     {
@@ -19,7 +19,6 @@ namespace WebApi.App_Start
             WebApiConfig.Register(config);
             FluentValidationConfig.RegisterValidation(config);
             XmlConfigurator.Configure();
-
             app.UseWebApi(config);
         }
     }

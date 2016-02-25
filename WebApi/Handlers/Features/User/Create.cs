@@ -5,25 +5,23 @@ using System.Threading.Tasks;
 using AutoMapper;
 using Common;
 using Contracts;
-using Domain;
 using FluentValidation;
 using FluentValidation.Attributes;
 using MediatR;
-using WebApi.Infrastructure;
 
 #pragma warning disable 618
 
-namespace WebApi.Features
+namespace WebApi.Handlers.Features.User
 {
 
     #region Handler
 
-    public class UserCreateHandler : IAsyncRequestHandler<UserCreateModel, ResponseObject>
+    public class Create : IAsyncRequestHandler<UserCreateModel, ResponseObject>
     {
         private readonly IUow Uow;
         private readonly IValidatorFactory Validator;
 
-        public UserCreateHandler(IUow uow, ModelValidatorFactory validatorFactory)
+        public Create(IUow uow, IValidatorFactory validatorFactory)
         {
             Uow = uow;
             Validator = validatorFactory;
@@ -40,7 +38,7 @@ namespace WebApi.Features
                 IsSuccessful = false
             };
             if (!validationResult.IsValid) return response;
-            var dest = Mapper.Map<User>(message);
+            var dest = Mapper.Map<Domain.User>(message);
             var result = new Logic.User(Uow).AddUser(dest);
             if (result == null) return null;
             response = new ResponseObject
@@ -56,7 +54,7 @@ namespace WebApi.Features
 
     #endregion
 
-    #region View Model
+    #region Request/Response Model
 
     [Validator(typeof (UserModelValidator))]
     public class UserCreateModel : IAsyncRequest<ResponseObject>
@@ -67,12 +65,15 @@ namespace WebApi.Features
 
     #endregion
 
-    #region Validation
+    #region Validator
 
     public class UserModelValidator : AbstractValidator<UserCreateModel>
     {
-        public UserModelValidator()
+        private readonly IUow Uow;
+
+        public UserModelValidator(IUow uow)
         {
+            Uow = uow;
             RuleFor(user => user.UserName).NotEmpty();
             RuleFor(user => user.UserName)
                 .Length(3, 250)

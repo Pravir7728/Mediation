@@ -7,14 +7,13 @@ using Common;
 using Contracts;
 using log4net;
 using MediatR;
-using WebApi.Features;
+using WebApi.Handlers.Features.User;
 
 namespace WebApi.Controllers
 {
     [RoutePrefix("Api/BUser")]
     public class BUserController : BaseController
     {
-
         public BUserController(IUow uow, IMediator mediatR, ILog log)
         {
             Uow = uow;
@@ -27,10 +26,9 @@ namespace WebApi.Controllers
         public string Version()
         {
             Log.Debug("GET Request traced");
-            return string.Format("{0}", Assembly.GetExecutingAssembly().GetName().Version);
+            return $"{Assembly.GetExecutingAssembly().GetName().Version}";
         }
 
-        //Create 
         [Route("Add")]
         [HttpPost]
         public async Task<IHttpActionResult> UploadAttendenceRegister(UserCreateModel model)
