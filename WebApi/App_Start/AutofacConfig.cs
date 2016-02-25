@@ -4,26 +4,20 @@ using System.Reflection;
 using System.Web.Http;
 using Autofac;
 using Autofac.Core;
-using Autofac.Extras.CommonServiceLocator;
 using Autofac.Features.Variance;
 using Autofac.Integration.WebApi;
-using Contracts;
-using DAL;
 using MediatR;
 using Owin;
 using WebApi.Handlers.Validation;
 using WebApi.Infrastructure.Mediator;
-using WebApi.Infrastructure.Modules;
 using WebApi.Infrastructure.Processes;
 
 namespace WebApi
 {
     public class AutofacConfig
     {
-        public static void ConfigureDependencyInjection(IAppBuilder app, HttpConfiguration config)
+        public static void RegisterAutofacIoc(IAppBuilder app, HttpConfiguration config, ContainerBuilder builder)
         {
-            var builder = new ContainerBuilder();
-
             builder.RegisterSource(new ContravariantRegistrationSource());
 
             builder.RegisterAssemblyTypes(typeof (IMediator).Assembly).AsImplementedInterfaces();
@@ -68,19 +62,6 @@ namespace WebApi
                 .InstancePerLifetimeScope();
 
             builder.RegisterApiControllers(Assembly.GetExecutingAssembly()).InstancePerRequest();
-            builder.RegisterType<Uow>().As<IUow>();
-            builder.RegisterType<RepositoryProvider>().As<IRepositoryProvider>();
-            builder.RegisterType<RepositoryFactories>().As<RepositoryFactories>().SingleInstance();
-            builder.RegisterType<AutofacServiceLocator>().AsImplementedInterfaces();
-
-            builder.RegisterModule(new LoggingConfig());
-
-            var container = builder.Build();
-
-            config.DependencyResolver = new AutofacWebApiDependencyResolver(container);
-
-            app.UseAutofacMiddleware(container);
-            app.UseAutofacWebApi(config);
         }
     }
 }

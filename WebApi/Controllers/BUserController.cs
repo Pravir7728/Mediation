@@ -3,7 +3,6 @@ using System.Net.Http;
 using System.Reflection;
 using System.Threading.Tasks;
 using System.Web.Http;
-using Common;
 using Contracts;
 using log4net;
 using MediatR;
@@ -33,13 +32,15 @@ namespace WebApi.Controllers
         [HttpPost]
         public async Task<IHttpActionResult> UploadAttendenceRegister(UserCreateModel model)
         {
-       
-            var result = await MediatR.SendAsync(model);
-            if (result.ResponseMessage.IsSuccessStatusCode)
+            if (ModelState.IsValid)
             {
-                return ResponseMessage(Request.CreateResponse(HttpStatusCode.OK,result));
+                var result = await MediatR.SendAsync(model);
+                if (result.ResponseMessage.IsSuccessStatusCode)
+                {
+                    return ResponseMessage(Request.CreateResponse(HttpStatusCode.OK, result));
+                }
             }
-            return ResponseMessage(Request.CreateResponse(HttpStatusCode.BadRequest, result));
+            return ResponseMessage(Request.CreateResponse(HttpStatusCode.BadRequest, ModelState.Values));
         }
     }
 }

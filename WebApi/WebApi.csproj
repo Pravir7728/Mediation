@@ -242,8 +242,10 @@
   <ItemGroup>
     <Compile Include="App_Start\AutofacConfig.cs" />
     <Compile Include="App_Start\AutoMapperConfig.cs" />
+    <Compile Include="App_Start\ContextConfig.cs" />
     <Compile Include="App_Start\FluentValidationConfig.cs" />
-    <Compile Include="Infrastructure\Modules\LoggingConfig.cs" />
+    <Compile Include="App_Start\Log4NetConfig.cs" />
+    <Compile Include="Infrastructure\Modules\LoggingModule.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
@@ -256,13 +258,12 @@
     </Compile>
     <Compile Include="Handlers\Validation\ValidatorHandler.cs" />
     <Compile Include="Infrastructure\Mediator\AsyncMediatorPipeline.cs" />
-    <Compile Include="Infrastructure\ModelValidatorFactory.cs" />
+    <Compile Include="Infrastructure\Factories\ValidatorFactory.cs" />
     <Compile Include="Infrastructure\Processes\IAsyncPostRequestHandler.cs" />
     <Compile Include="Infrastructure\Processes\IAsyncPreRequestHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\web.config" />
     <Content Include="packages.config" />
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

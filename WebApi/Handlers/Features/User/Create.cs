@@ -19,29 +19,29 @@ namespace WebApi.Handlers.Features.User
     public class Create : IAsyncRequestHandler<UserCreateModel, ResponseObject>
     {
         private readonly IUow Uow;
-        private readonly IValidatorFactory Validator;
+        //private readonly IValidatorFactory Validator;
 
-        public Create(IUow uow, IValidatorFactory validatorFactory)
+        public Create(IUow uow)
         {
             Uow = uow;
-            Validator = validatorFactory;
+            //Validator = validatorFactory;
         }
 
         public async Task<ResponseObject> Handle(UserCreateModel message)
         {
-            var validationResult = Validator.GetValidator<UserModelValidator>().Validate(message);
-            var response = new ResponseObject
-            {
-                ResponseMessage = new HttpResponseMessage(HttpStatusCode.BadRequest),
-                Data = validationResult.Errors,
-                Message = "Validation Failed on one or more properties",
-                IsSuccessful = false
-            };
-            if (!validationResult.IsValid) return response;
+            //var validationResult = Validator.GetValidator<UserCreateModel>().Validate(message);
+            //var response = new ResponseObject
+            //{
+            //    ResponseMessage = new HttpResponseMessage(HttpStatusCode.BadRequest),
+            //    Data = validationResult.Errors,
+            //    Message = "Validation Failed on one or more properties",
+            //    IsSuccessful = false
+            //};
+            //if (!validationResult.IsValid) return response;
             var dest = Mapper.Map<Domain.User>(message);
             var result = new Logic.User(Uow).AddUser(dest);
             if (result == null) return null;
-            response = new ResponseObject
+            var response = new ResponseObject
             {
                 ResponseMessage = new HttpResponseMessage(HttpStatusCode.OK),
                 Data = result,

@@ -6,7 +6,7 @@ using Module = Autofac.Module;
 
 namespace WebApi.Infrastructure.Modules
 {
-    public class LoggingConfig : Module
+    public class LoggingModule : Module
     {
         private static void InjectLoggerProperties(object instance)
         {
