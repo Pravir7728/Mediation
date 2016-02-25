@@ -1,5 +1,6 @@
 ﻿using System.Web.Http;
 using Contracts;
+using log4net;
 using MediatR;
 
 namespace WebApi.Controllers
@@ -8,5 +9,6 @@ namespace WebApi.Controllers
     {
         public IUow Uow { get; set; }
         public IMediator MediatR { get; set; }
+        public ILog Log { get; set; }
     }
 }
