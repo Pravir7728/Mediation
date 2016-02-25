@@ -71,6 +71,10 @@
       <HintPath>..\packages\AutoMapper.4.2.0\lib\net45\AutoMapper.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Elmah, Version=1.2.14706.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\elmah.corelibrary.1.2.2\lib\Elmah.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="FluentValidation, Version=6.2.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\FluentValidation.6.2.0.0\lib\Net45\FluentValidation.dll</HintPath>
       <Private>True</Private>
@@ -232,6 +236,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Readme\Elmah.txt" />
     <Content Include="Global.asax" />
     <Content Include="scripts\ai.0.15.0-build58334.js" />
     <Content Include="scripts\ai.0.15.0-build58334.min.js" />
@@ -245,12 +250,16 @@
     <Compile Include="App_Start\ContextConfig.cs" />
     <Compile Include="App_Start\FluentValidationConfig.cs" />
     <Compile Include="App_Start\Log4NetConfig.cs" />
+    <Compile Include="Handlers\Features\User\Delete.cs" />
+    <Compile Include="Handlers\Features\User\GetAll.cs" />
+    <Compile Include="Handlers\Features\User\GetById.cs" />
+    <Compile Include="Handlers\Features\User\Update.cs" />
     <Compile Include="Infrastructure\Modules\LoggingModule.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\BaseController.cs" />
-    <Compile Include="Controllers\BUserController.cs" />
+    <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Extensions\BidirectionalMap.cs" />
     <Compile Include="Handlers\Features\User\Create.cs" />
     <Compile Include="Global.asax.cs">

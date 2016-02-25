@@ -9,6 +9,7 @@ using FluentValidation;
 using FluentValidation.Attributes;
 using MediatR;
 
+#pragma warning disable 1998
 #pragma warning disable 618
 
 namespace WebApi.Handlers.Features.User
@@ -18,34 +19,23 @@ namespace WebApi.Handlers.Features.User
 
     public class Create : IAsyncRequestHandler<UserCreateModel, ResponseObject>
     {
-        private readonly IUow Uow;
-        //private readonly IValidatorFactory Validator;
+        private readonly IUow _uow;
 
         public Create(IUow uow)
         {
-            Uow = uow;
-            //Validator = validatorFactory;
+            _uow = uow;
         }
 
         public async Task<ResponseObject> Handle(UserCreateModel message)
         {
-            //var validationResult = Validator.GetValidator<UserCreateModel>().Validate(message);
-            //var response = new ResponseObject
-            //{
-            //    ResponseMessage = new HttpResponseMessage(HttpStatusCode.BadRequest),
-            //    Data = validationResult.Errors,
-            //    Message = "Validation Failed on one or more properties",
-            //    IsSuccessful = false
-            //};
-            //if (!validationResult.IsValid) return response;
             var dest = Mapper.Map<Domain.User>(message);
-            var result = new Logic.User(Uow).AddUser(dest);
+            var result = new Logic.User(_uow).AddUser(dest);
             if (result == null) return null;
             var response = new ResponseObject
             {
                 ResponseMessage = new HttpResponseMessage(HttpStatusCode.OK),
                 Data = result,
-                Message = "Users retrieved Successfully",
+                Message = "Users Added Successfully",
                 IsSuccessful = true
             };
             return response;
@@ -69,11 +59,11 @@ namespace WebApi.Handlers.Features.User
 
     public class UserModelValidator : AbstractValidator<UserCreateModel>
     {
-        private readonly IUow Uow;
+        private readonly IUow _uow;
 
         public UserModelValidator(IUow uow)
         {
-            Uow = uow;
+            _uow = uow;
             RuleFor(user => user.UserName).NotEmpty();
             RuleFor(user => user.UserName)
                 .Length(3, 250)

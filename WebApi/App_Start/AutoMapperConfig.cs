@@ -12,6 +12,7 @@ namespace WebApi
         public static void RegisterMapping()
         {
             Mapper.CreateMap<UserCreateModel, User>().Bidirectional();
+            Mapper.CreateMap<GetUserResponse, User>().Bidirectional();
         }
     }
 }
