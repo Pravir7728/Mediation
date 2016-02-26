@@ -37,6 +37,7 @@ namespace Logic
         {
             if (model == null) return null;
             var userToUpdate = Uow.Users.GetById(model.UserId);
+            model.DateCaptured = DateTime.Now;
             Uow.Users.Update(model, userToUpdate.UserId);
             Uow.Commit();
             Uow.Users.Detach(model);

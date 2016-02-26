@@ -59,9 +59,9 @@ namespace WebApi.Controllers
             return ResponseMessage(Request.CreateResponse(HttpStatusCode.BadRequest, ModelState.Values));
         }
 
-        [Route("Delete")]
+        [Route("Delete/{UserId}")]
         [HttpPost]
-        public async Task<IHttpActionResult> Delete(UserDeleteRequestModel model)
+        public async Task<IHttpActionResult> Delete([FromUri] UserDeleteRequestModel model)
         {
             if (ModelState.IsValid)
             {
