@@ -25,11 +25,13 @@ namespace WebApi
             FluentValidationConfig.RegisterValidation(builder, config);
             var container = builder.Build();
             config.DependencyResolver = new AutofacWebApiDependencyResolver(container);
-            app.UseAutofacMiddleware(container);
-            app.UseAutofacWebApi(config);
             WebApiConfig.Register(config);
             XmlConfigurator.Configure();
+            builder.RegisterWebApiFilterProvider(GlobalConfiguration.Configuration);
+            app.UseAutofacMiddleware(container);
+            app.UseAutofacWebApi(config);
             app.UseWebApi(config);
+            app.UseCors(Microsoft.Owin.Cors.CorsOptions.AllowAll);
         }
     }
 }

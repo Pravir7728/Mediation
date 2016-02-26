@@ -13,6 +13,7 @@ namespace WebApi
         {
             Mapper.CreateMap<UserCreateModel, User>().Bidirectional();
             Mapper.CreateMap<GetUserResponse, User>().Bidirectional();
+            Mapper.CreateMap<UserUpdateModel, User>().Bidirectional();
         }
     }
 }
