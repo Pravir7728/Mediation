@@ -42,6 +42,7 @@ namespace WebApi.Handlers.Features.User
     #region Request/Response Model
     public class GetAllUserRequest : IAsyncRequest<ResponseObject>
     {
+
     }
 
     public class GetAllUserResponse : IAsyncRequest<ResponseObject>

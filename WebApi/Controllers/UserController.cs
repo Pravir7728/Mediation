@@ -44,6 +44,33 @@ namespace WebApi.Controllers
             return ResponseMessage(Request.CreateResponse(HttpStatusCode.BadRequest, ModelState.Values));
         }
 
+        [Route("Update")]
+        [HttpPost]
+        public async Task<IHttpActionResult> Update(UserUpdateModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var result = await MediatR.SendAsync(model);
+                if (result.ResponseMessage.IsSuccessStatusCode)
+                {
+                    return ResponseMessage(Request.CreateResponse(HttpStatusCode.OK, result));
+                }
+            }
+            return ResponseMessage(Request.CreateResponse(HttpStatusCode.BadRequest, ModelState.Values));
+        }
+
+        [Route("Delete")]
+        [HttpPost]
+        public async Task<IHttpActionResult> Delete(UserDeleteRequestModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var result = await MediatR.SendAsync(model);
+                return ResponseMessage(Request.CreateResponse(HttpStatusCode.OK, result));
+            }
+            return ResponseMessage(Request.CreateResponse(HttpStatusCode.BadRequest, ModelState.Values));
+        }
+
         [Route("GetById/{UserId}")]
         [HttpGet]
         public async Task<IHttpActionResult> GetUserById([FromUri] GetUserRequest model)
@@ -59,7 +86,7 @@ namespace WebApi.Controllers
 
         [Route("GetAll")]
         [HttpGet]
-        public async Task<IHttpActionResult> GetAll(GetAllUserRequest model)
+        public async Task<IHttpActionResult> GetAll([FromUri] GetAllUserRequest model)
         {
             Log.Debug("HTTP GET Request traced");
             var result = await MediatR.SendAsync(model);

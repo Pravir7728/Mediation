@@ -33,6 +33,16 @@ namespace Logic
             return model;
         }
 
+        public Domain.User UpdateUser(Domain.User model)
+        {
+            if (model == null) return null;
+            var userToUpdate = Uow.Users.GetById(model.UserId);
+            Uow.Users.Update(model, userToUpdate.UserId);
+            Uow.Commit();
+            Uow.Users.Detach(model);
+            return model;
+        }
+
         public Domain.User GetUserById(Guid id)
         {
             return Uow.Users.GetById(id);
