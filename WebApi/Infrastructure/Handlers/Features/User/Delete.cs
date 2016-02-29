@@ -8,35 +8,31 @@ using Contracts;
 using FluentValidation;
 using FluentValidation.Attributes;
 using MediatR;
-using static AutoMapper.Mapper;
 
 #pragma warning disable 1998
-#pragma warning disable 618
 
-namespace WebApi.Handlers.Features.User
+namespace WebApi.Infrastructure.Handlers.Features.User
 {
 
     #region Handler
 
-    public class GetById : IAsyncRequestHandler<GetUserRequest, ResponseObject>
+    public class Delete : IAsyncRequestHandler<UserDeleteRequestModel, ResponseObject>
     {
         private readonly IUow _uow;
 
-        public GetById(IUow uow)
+        public Delete(IUow uow)
         {
             _uow = uow;
         }
 
-        public async Task<ResponseObject> Handle(GetUserRequest message)
+        public async Task<ResponseObject> Handle(UserDeleteRequestModel message)
         {
-            var result = new Logic.User(_uow).GetUserById(message.UserId);
-            if (result == null) return null;
-            var dest = Map<GetUserResponse>(result);
+            new Logic.User(_uow).DeleteUserById(message.UserId);
             var response = new ResponseObject
             {
                 ResponseMessage = new HttpResponseMessage(HttpStatusCode.OK),
-                Data = dest,
-                Message = "User retrieved Successfully",
+                Data = new UserDeleteResponseModel {DeleteIsSuccessful = true},
+                Message = "User Deleted Successfully",
                 IsSuccessful = true
             };
             return response;
@@ -47,27 +43,26 @@ namespace WebApi.Handlers.Features.User
 
     #region Request/Response Model
 
-    [Validator(typeof (GetUserResponseModel))]
-    public class GetUserRequest : IAsyncRequest<ResponseObject>
+    [Validator(typeof (DeleteUserValidator))]
+    public class UserDeleteRequestModel : IAsyncRequest<ResponseObject>
     {
         public Guid UserId { get; set; }
     }
 
-    public class GetUserResponse : IAsyncRequest<ResponseObject>
+    public class UserDeleteResponseModel : IAsyncRequest<ResponseObject>
     {
-        public string UserName { get; set; }
-        public string Password { get; set; }
+        public bool DeleteIsSuccessful { get; set; }
     }
 
     #endregion
 
     #region Validator
 
-    public class GetUserResponseModel : AbstractValidator<GetUserRequest>
+    public class DeleteUserValidator : AbstractValidator<GetUserRequest>
     {
         private readonly IUow _uow;
 
-        public GetUserResponseModel(IUow uow)
+        public DeleteUserValidator(IUow uow)
         {
             _uow = uow;
             RuleFor(user => user.UserId).NotEmpty();

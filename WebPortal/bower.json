@@ -1,0 +1,21 @@
+{
+	"name": "Mediation.WebPortal",
+	"private": true,
+	"dependencies": {
+		"awesome-bootstrap-checkbox": "^0.3.5",
+		"bootstrap-sass": "^3.3.5",
+		"bootstrap-toggle": "^2.2.1",
+		"eonasdan-bootstrap-datetimepicker": "^4.17.37",
+		"enquire": "^2.1.2",
+		"fontawesome": "^4.4.0",
+		"html5shiv": "^3.7.3",
+		"jQuery": "^2.2.1",
+		"jquery-validate": "^1.14.0",
+		"jquery-ui": "^1.11.4",
+		"less": "^2.5.2",
+		"moment": "^2.10.6",
+		"modernizr": "^3.0.0",
+		"respond": "^1.4.2",
+		"react": "^0.14.7"
+	}
+}

@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Diagnostics;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -12,30 +13,30 @@ using MediatR;
 #pragma warning disable 1998
 #pragma warning disable 618
 
-namespace WebApi.Handlers.Features.User
+namespace WebApi.Infrastructure.Handlers.Features.User
 {
 
     #region Handler
 
-    public class Create : IAsyncRequestHandler<UserCreateModel, ResponseObject>
+    public class Update : IAsyncRequestHandler<UserUpdateModel, ResponseObject>
     {
         private readonly IUow _uow;
 
-        public Create(IUow uow)
+        public Update(IUow uow)
         {
             _uow = uow;
         }
 
-        public async Task<ResponseObject> Handle(UserCreateModel message)
+        public async Task<ResponseObject> Handle(UserUpdateModel message)
         {
             var dest = Mapper.Map<Domain.User>(message);
-            var result = new Logic.User(_uow).AddUser(dest);
+            var result = new Logic.User(_uow).UpdateUser(dest);
             if (result == null) return null;
             var response = new ResponseObject
             {
                 ResponseMessage = new HttpResponseMessage(HttpStatusCode.OK),
                 Data = result,
-                Message = "Users Added Successfully",
+                Message = "User Updated Successfully",
                 IsSuccessful = true
             };
             return response;
@@ -46,9 +47,10 @@ namespace WebApi.Handlers.Features.User
 
     #region Request/Response Model
 
-    [Validator(typeof (UserModelValidator))]
-    public class UserCreateModel : IAsyncRequest<ResponseObject>
+    [Validator(typeof (UpdateUserValidator))]
+    public class UserUpdateModel : IAsyncRequest<ResponseObject>
     {
+        public Guid UserId { get; set; }
         public string UserName { get; set; }
         public string Password { get; set; }
     }
@@ -57,13 +59,14 @@ namespace WebApi.Handlers.Features.User
 
     #region Validator
 
-    public class UserModelValidator : AbstractValidator<UserCreateModel>
+    public class UpdateUserValidator : AbstractValidator<UserUpdateModel>
     {
         private readonly IUow _uow;
 
-        public UserModelValidator(IUow uow)
+        public UpdateUserValidator(IUow uow)
         {
             _uow = uow;
+            RuleFor(user => user.UserId).NotEmpty();
             RuleFor(user => user.UserName).NotEmpty();
             RuleFor(user => user.UserName)
                 .Length(3, 250)
@@ -71,9 +74,9 @@ namespace WebApi.Handlers.Features.User
             RuleFor(user => user.Password).NotEmpty();
         }
 
-        public Task Handle(UserCreateModel request)
+        public Task Handle(UserUpdateModel request)
         {
-            Debug.WriteLine("UserCreateModel Handler");
+            Debug.WriteLine("UserUpdateModel Handler");
             return Task.FromResult(true);
         }
     }

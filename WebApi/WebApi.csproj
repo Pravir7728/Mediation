@@ -261,24 +261,24 @@
     <Compile Include="App_Start\ContextConfig.cs" />
     <Compile Include="App_Start\FluentValidationConfig.cs" />
     <Compile Include="App_Start\Log4NetConfig.cs" />
-    <Compile Include="Handlers\Features\User\Delete.cs" />
-    <Compile Include="Handlers\Features\User\GetAll.cs" />
-    <Compile Include="Handlers\Features\User\GetById.cs" />
-    <Compile Include="Handlers\Features\User\Update.cs" />
+    <Compile Include="Infrastructure\Factories\ValidatorFactory.cs" />
+    <Compile Include="Infrastructure\Handlers\Features\User\Delete.cs" />
+    <Compile Include="Infrastructure\Handlers\Features\User\GetAll.cs" />
+    <Compile Include="Infrastructure\Handlers\Features\User\GetById.cs" />
+    <Compile Include="Infrastructure\Handlers\Features\User\Update.cs" />
     <Compile Include="Infrastructure\Modules\LoggingModule.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\UserController.cs" />
-    <Compile Include="Extensions\BidirectionalMap.cs" />
-    <Compile Include="Handlers\Features\User\Create.cs" />
+    <Compile Include="Infrastructure\Extensions\BidirectionalMap.cs" />
+    <Compile Include="Infrastructure\Handlers\Features\User\Create.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Handlers\Validation\ValidatorHandler.cs" />
+    <Compile Include="Infrastructure\Handlers\Validation\ValidatorHandler.cs" />
     <Compile Include="Infrastructure\Mediator\AsyncMediatorPipeline.cs" />
-    <Compile Include="Infrastructure\Factories\ValidatorFactory.cs" />
     <Compile Include="Infrastructure\Processes\IAsyncPostRequestHandler.cs" />
     <Compile Include="Infrastructure\Processes\IAsyncPreRequestHandler.cs" />
     <Compile Include="Infrastructure\Providers\SimpleAuthorizationServerProvider.cs" />
@@ -298,7 +298,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Common\Common.csproj">

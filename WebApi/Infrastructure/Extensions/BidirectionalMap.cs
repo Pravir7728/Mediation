@@ -2,7 +2,7 @@
 
 #pragma warning disable 618
 
-namespace WebApi.Extensions
+namespace WebApi.Infrastructure.Extensions
 {
     public static class BidirectionalMap
     {

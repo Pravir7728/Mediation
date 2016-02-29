@@ -8,7 +8,7 @@ using Autofac.Features.Variance;
 using Autofac.Integration.WebApi;
 using MediatR;
 using Owin;
-using WebApi.Handlers.Validation;
+using WebApi.Infrastructure.Handlers.Validation;
 using WebApi.Infrastructure.Mediator;
 using WebApi.Infrastructure.Processes;
 
@@ -50,15 +50,15 @@ namespace WebApi
             builder.RegisterGenericDecorator(typeof (AsyncMediatorPipeline<,>), typeof (IAsyncRequestHandler<,>),
                 "asyncRequestHandler");
 
+            builder.RegisterAssemblyTypes(Assembly.GetExecutingAssembly())
+                .Where(t => t.Name.EndsWith("ValidationHandler"))
+                .AsImplementedInterfaces()
+                .InstancePerLifetimeScope();
+
             builder.RegisterGenericDecorator(
                 typeof (ValidatorHandler<,>),
                 typeof (IAsyncRequestHandler<,>),
                 "asyncMediatorPipeline")
-                .InstancePerLifetimeScope();
-
-            builder.RegisterAssemblyTypes(Assembly.GetExecutingAssembly())
-                .Where(t => t.Name.EndsWith("ValidationHandler"))
-                .AsImplementedInterfaces()
                 .InstancePerLifetimeScope();
 
             builder.RegisterApiControllers(Assembly.GetExecutingAssembly()).InstancePerRequest();

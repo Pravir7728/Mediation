@@ -10,7 +10,7 @@ using MediatR;
 #pragma warning disable 1998
 #pragma warning disable 618
 
-namespace WebApi.Handlers.Features.User
+namespace WebApi.Infrastructure.Handlers.Features.User
 {
     #region Handler
     public class GetAll : IAsyncRequestHandler<GetAllUserRequest, ResponseObject>

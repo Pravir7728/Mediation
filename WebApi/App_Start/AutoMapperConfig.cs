@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using Domain;
-using WebApi.Extensions;
-using WebApi.Handlers.Features.User;
+using WebApi.Infrastructure.Extensions;
+using WebApi.Infrastructure.Handlers.Features.User;
 
 #pragma warning disable 618
 

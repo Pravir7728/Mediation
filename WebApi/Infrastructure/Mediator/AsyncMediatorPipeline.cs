@@ -1,4 +1,7 @@
 ﻿using System.Threading.Tasks;
+using log4net;
+using log4net.Core;
+using log4net.Repository.Hierarchy;
 using MediatR;
 using WebApi.Infrastructure.Processes;
 
@@ -20,10 +23,12 @@ namespace WebApi.Infrastructure.Mediator
             this.postRequestHandlers = postRequestHandlers;
         }
 
-        //public ILogger Logger { get; set; }
+        public ILog Logger { get; set; }
 
         public async Task<TResponse> Handle(TRequest message)
         {
+            Logger.Debug("Mediator Debug");
+
             foreach (var preRequestHandler in preRequestHandlers)
             {
                 await preRequestHandler.Handle(message);

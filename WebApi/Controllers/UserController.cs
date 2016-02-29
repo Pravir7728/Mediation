@@ -6,7 +6,7 @@ using System.Web.Http;
 using Contracts;
 using log4net;
 using MediatR;
-using WebApi.Handlers.Features.User;
+using WebApi.Infrastructure.Handlers.Features.User;
 
 namespace WebApi.Controllers
 {
